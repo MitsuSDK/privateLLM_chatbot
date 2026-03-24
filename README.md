@@ -1,51 +1,184 @@
-# Welcome to your Expo app 👋
+# 🤖 Private LLM Chatbot
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### Local LLM Mobile Chat Interface (Expo + React Native)
 
-## Get started
+A fully local AI chatbot built with React Native (Expo) that connects to a private Large Language Model served via LM Studio using an OpenAI-compatible API endpoint.
 
-1. Install dependencies
+No cloud APIs. No external services. 100% local inference.
 
-   ```bash
-   npm install
-   ```
+---
+## ‼️ IMPORTANT NOTE
 
-2. Start the app
+The UI is intentionally vibe-coded: lightweight, minimal, and built quickly to serve experimentation.
 
-   ```bash
-   npx expo start
-   ```
+This project focuses on AI system integration rather than frontend sophistication.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🚀 Overview
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+This project demonstrates how to build a mobile-first conversational AI interface that connects directly to a locally hosted LLM.
 
-## Get a fresh project
+The application:
 
-When you're ready, run:
+- Runs on mobile (iOS / Android) and web via Expo
+- Connects to a local LLM server (LM Studio)
+- Uses OpenAI-compatible `/v1/chat/completions` endpoint
+- Maintains conversation state
+- Handles request / response lifecycle
 
-```bash
-npm run reset-project
+The objective is to understand how LLM chat systems function at the client level without relying on external APIs.
+
+---
+
+## 🏗️ Architecture
+
+User Input  
+↓  
+Conversation State (React State)  
+↓  
+POST Request to Local LLM Server  
+↓  
+LM Studio (OpenAI-compatible endpoint)  
+↓  
+Generated Response  
+↓  
+UI Update  
+
+---
+
+## 🧠 Core Concepts Explored
+
+- Local LLM inference
+- OpenAI-compatible API usage
+- REST communication with fetch()
+- Conversation state management
+- Prompt message formatting
+- Token temperature configuration
+- Error handling for local endpoints
+- Mobile-first AI interface design
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React Native
+- Expo
+- TypeScript
+
+### Navigation & UI
+- expo-router
+- react-navigation
+- react-native-safe-area-context
+
+### LLM Communication
+- fetch API (HTTP POST)
+- OpenAI-compatible `/v1/chat/completions` endpoint
+- Bearer token authentication
+
+### LLM Runtime (External)
+- LM Studio
+- Local LLM (e.g., Llama 3.1)
+
+---
+
+## 📦 Dependencies
+
+Main dependencies from `package.json`:
+
+- expo
+- react
+- react-native
+- expo-router
+- react-navigation
+- react-native-gesture-handler
+- react-native-reanimated
+- typescript
+
+---
+
+## ⚙️ How It Works
+
+The application sends a POST request to:
+
+http://:1234/v1/chat/completions
+
+With payload:
+
+```json
+{
+  "model": "lmstudio",
+  "messages": [...],
+  "temperature": 0.7
+}
 ```
+The server responds with:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+```json
 
-## Learn more
+{
+  "choices": [
+    {
+      "message": {
+        "content": "Model response..."
+      }
+    }
+  ]
+}
+```
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🧩 Conversation Handling
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Messages are stored in React state
+- Each message contains:
+  - `id`
+  - `role` (user / assistant)
+  - `text`
+- Full conversation history is sent with each request
+- Loading state prevents duplicate submissions
+- Error handling displays fallback message if the LLM server is unreachable
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 🎨 UI Philosophy
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# Ai_assistant
+The graphical interface was intentionally built in a rapid, vibe-coded approach.
+
+The focus of this project is not frontend sophistication, but LLM infrastructure and client–model interaction.
+
+The UI prioritizes:
+
+- Clean conversation layout  
+- Minimalistic design  
+- Theme support (light / dark)  
+- Functional mobile-first experience  
+
+The goal was to create a lightweight interface to experiment efficiently with local LLM serving.
+
+---
+
+## 🚧 Future Improvements
+
+- Streaming responses
+- Token usage tracking
+- System prompt configuration
+- Conversation memory optimization
+- Model selection UI
+- Secure token management
+- WebSocket-based streaming
+- Production-grade error handling
+
+---
+
+## 📌 What This Project Demonstrates
+
+- Understanding of LLM serving infrastructure
+- Client-side integration with OpenAI-compatible APIs
+- Conversation state management in React Native
+- Mobile-first AI interface development
+- Private AI system architecture
+
+This project emphasizes system-level understanding over UI complexity.
+The response is parsed and appended to the conversation state.
